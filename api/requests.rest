@@ -1,0 +1,26 @@
+POST http://localhost:3000/api/clients/add
+Content-Type: application/json
+
+{
+    "title": "Mr",
+    "first_name": "Ryan",
+    "last_name": "Blum",
+    "email": "ryan@email.com",
+    "home_tel": "01903 425 647",
+    "mobile_tel": "07936 745 742",
+    "address_1": "13 Wicked House",
+    "address_2": "4 Dirt Road",
+    "town": "Brighton",
+    "county": "East Sussex",
+    "postcode": "BN2 3DF",
+    "ec_name": "Jenny Brown",
+    "ec_number": "07762 123 456",
+    "GAD7": 19,
+    "PHQ9": 15
+}
+
+###
+
+GET http://localhost:3000/api/clients/1
+Content-Type: application/json
+
