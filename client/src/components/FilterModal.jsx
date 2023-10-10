@@ -1,9 +1,14 @@
 import React from "react";
 
-export default function FilterModal({ isFilterModalOpen }) {
+export default function FilterModal({ isFilterModalOpen, onClose }) {
   const handleCheckboxChange = (event) => {
     // Handle checkbox changes here
     // You can update the filter criteria based on the selected checkboxes
+  };
+
+  const handleCloseClick = () => {
+    // Call the onClose function to close the modal
+    onClose();
   };
 
   return (
@@ -25,6 +30,7 @@ export default function FilterModal({ isFilterModalOpen }) {
         <input type="checkbox" value="Closed" onChange={handleCheckboxChange} />
         Closed
       </label>
+      <button onClick={handleCloseClick}>Close</button>
     </div>
   );
 }

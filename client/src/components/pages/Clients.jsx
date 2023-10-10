@@ -44,6 +44,16 @@ export default function Clients() {
     }
   };
 
+  const toggleFilterModal = () => {
+    setIsFilterModalOpen(!isFilterModalOpen);
+  };
+
+  const handleFilterChange = (newFilterCriteria) => {
+    setFilterCriteria(newFilterCriteria);
+    setIsFilterModalOpen(false); // Close the filter modal
+    fetchClientData(1); // Fetch data for the first page with the new filter
+  };
+
   // Generate an array of page numbers
   const pageNumbers = Array.from(
     { length: totalPages },
@@ -59,16 +69,9 @@ export default function Clients() {
             <h1 className="page-header">Clients</h1>
           </div>
           <div className="header-buttons">
-            <button
-              className="other-button-style"
-              onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}
-            >
+            <button className="other-button-style" onClick={toggleFilterModal}>
               <i className="fa-solid fa-filter"></i> Filter
             </button>
-
-            {isFilterModalOpen && (
-              <FilterModal isFilterModalOpen={isFilterModalOpen} />
-            )}
 
             <a href="/clients/add">
               <button className="other-button-style">
@@ -132,7 +135,7 @@ export default function Clients() {
                   <p
                     key={pageNumber}
                     className={currentPage === pageNumber ? "active-page" : ""}
-                    onClick={() => setCurrentPage(pageNumber)} // Add onClick handler
+                    onClick={() => setCurrentPage(pageNumber)}
                     style={{ cursor: "pointer" }}
                   >
                     {pageNumber}
@@ -151,6 +154,14 @@ export default function Clients() {
           </div>
         </div>
       </div>
+
+      {isFilterModalOpen && (
+        <FilterModal
+          isFilterModalOpen={isFilterModalOpen}
+          onFilterChange={handleFilterChange}
+          onClose={() => setIsFilterModalOpen(false)}
+        />
+      )}
     </>
   );
 }

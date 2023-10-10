@@ -158,24 +158,38 @@ a {
 
 /* Filter modal */
 .filter-modal {
+  flex-direction: column;
   display: none; /* Initially, hide the modal */
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 40%;
+  top: 30%;
+  width: 25%;
+  /* transform: translate(-50%, -50%); */
   background-color: white;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  max-width: 400px;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 .filter-modal.open {
-  display: block; /* Show the modal when the "open" class is applied */
+  display: flex;
+  /* Show the modal when the "open" class is applied */
 }
 
 .filter-modal h2 {
-  font-size: 18px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.filter-modal input {
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+
+.filter-modal label {
+  font-size: 20px;
 }
 
 /* NAVBAR */
@@ -271,6 +285,7 @@ a {
 
 .active-page {
   border-bottom: 2px solid #40c551;
+  font-weight: bold;
 }
 
 /* MAIN CONTENT */
@@ -281,6 +296,7 @@ a {
   margin: 0 0 0 250px;
   padding: 20px 30px;
   overflow-y: auto;
+  height: 100vh;
 }
 
 /* CLIENTS */
@@ -305,7 +321,7 @@ a {
 .client-table tbody tr {
   width: 100%;
   max-height: 55px;
-  height: 55px;
+  height: 10%;
 }
 
 .client-table thead {
@@ -319,7 +335,7 @@ a {
 .client-table tbody {
   width: 100%;
   border: 2px solid #ececec;
-  height: 606px;
+  height: 60vh;
 }
 
 .client-table tbody i {
@@ -329,6 +345,7 @@ a {
 .client-table tbody i:hover {
   color: #40c551;
   scale: 1.15;
+  text-shadow: 2px 2px 2px #2e2e2e;
 }
 
 .client-table tbody tr:nth-child(odd) {
@@ -347,7 +364,7 @@ a {
 
 .client-table th,
 .client-table td {
-  padding: 12px 20px;
+  /* padding: 8px 10px; */
   font-size: 18px;
   overflow: hidden;
   white-space: nowrap;
