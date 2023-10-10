@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getStatusClass } from "../../utils/statusUtils";
 import Navbar from "../Navbar";
+import FilterModal from "../FilterModal";
 
 export default function Clients() {
   const [clients, setClients] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   const fetchClientData = async (page) => {
     try {
@@ -57,9 +59,16 @@ export default function Clients() {
             <h1 className="page-header">Clients</h1>
           </div>
           <div className="header-buttons">
-            <button className="other-button-style">
+            <button
+              className="other-button-style"
+              onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}
+            >
               <i className="fa-solid fa-filter"></i> Filter
             </button>
+
+            {isFilterModalOpen && (
+              <FilterModal isFilterModalOpen={isFilterModalOpen} />
+            )}
 
             <a href="/clients/add">
               <button className="other-button-style">
@@ -123,7 +132,8 @@ export default function Clients() {
                   <p
                     key={pageNumber}
                     className={currentPage === pageNumber ? "active-page" : ""}
-                    onClick={() => setCurrentPage(pageNumber)}
+                    onClick={() => setCurrentPage(pageNumber)} // Add onClick handler
+                    style={{ cursor: "pointer" }}
                   >
                     {pageNumber}
                   </p>

@@ -156,6 +156,28 @@ a {
   margin-right: 15px;
 }
 
+/* Filter modal */
+.filter-modal {
+  display: none; /* Initially, hide the modal */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 400px;
+}
+
+.filter-modal.open {
+  display: block; /* Show the modal when the "open" class is applied */
+}
+
+.filter-modal h2 {
+  font-size: 18px;
+}
+
 /* NAVBAR */
 .navbar {
   position: fixed;
