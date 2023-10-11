@@ -146,47 +146,45 @@ app.get("/api/clients", async (req, res) => {
   });
 });
 
-// Add Appintment
-app.post("api/appointments/add", (req, res) => {
+// Add Appointment
+app.post("/api/appointments/add", (req, res) => {
   try {
-    const { date, start_time, end_time, client_id, user_id } = req.body;
+    const { type, date, start_time, end_time, client_id, user_id } = req.body;
 
     const insertApptSql =
-      "INSERT INTO appointments (date, start_time, end_time, client_id, user_id) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO appointments (type, date, start_time, end_time, client_id, user_id) VALUES (?, ?, ?, ?, ?, ?)";
 
     db.query(
       insertSql,
-      [date, start_time, end_time, client_id, user_id],
+      [type, date, start_time, end_time, client_id, user_id],
       (err, result) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ error: "Error adding appointment" });
         }
+        return res
+          .status(201)
+          .json({ message: "Appointment added successfully" });
       }
     );
   } catch (err) {
     console.error(err);
+    return res.status(500).json({ error: "Error adding appointment" });
   }
 });
 
-// Get Appointment
+// Get All Appointments
 app.get("/api/appointments", (req, res) => {
   try {
-    const { date, start_time, end_time, client_id, user_id } = req.body;
-
     const getApptSql = "SELECT * FROM appointments";
 
-    db.query(
-      getApptSql,
-      [date, start_time, end_time, client_id, user_id],
-      (err, result) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ error: "Error getting appointments" });
-        }
-        return res.status(201).json({ result });
+    db.query(getApptSql, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Error getting appointments" });
       }
-    );
+      return res.status(201).json({ result });
+    });
   } catch (err) {
     console.error(err);
   }
