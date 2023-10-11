@@ -1,13 +1,18 @@
 import React from "react";
 
-export default function FilterModal({ isFilterModalOpen, onClose }) {
+export default function FilterModal({
+  isFilterModalOpen,
+  onClose,
+  filterCriteria,
+  onFilterChange,
+}) {
   const handleCheckboxChange = (event) => {
-    // Handle checkbox changes here
-    // You can update the filter criteria based on the selected checkboxes
+    const value = event.target.value;
+    console.log("Selected Filter:", value);
+    onFilterChange(value);
   };
 
   const handleCloseClick = () => {
-    // Call the onClose function to close the modal
     onClose();
   };
 
@@ -15,19 +20,48 @@ export default function FilterModal({ isFilterModalOpen, onClose }) {
     <div className={`filter-modal ${isFilterModalOpen ? "open" : ""}`}>
       <h2>Filter by Status</h2>
       <label>
-        <input type="checkbox" value="All" onChange={handleCheckboxChange} />
+        <input
+          type="checkbox"
+          value="All"
+          onChange={handleCheckboxChange}
+          checked={filterCriteria === "All"}
+        />
         All
       </label>
       <label>
-        <input type="checkbox" value="New" onChange={handleCheckboxChange} />
+        <input
+          type="checkbox"
+          value="New"
+          onChange={handleCheckboxChange}
+          checked={filterCriteria === "New"}
+        />
         New
       </label>
       <label>
-        <input type="checkbox" value="Active" onChange={handleCheckboxChange} />
+        <input
+          type="checkbox"
+          value="Active"
+          onChange={handleCheckboxChange}
+          checked={filterCriteria === "Active"}
+        />
         Active
       </label>
       <label>
-        <input type="checkbox" value="Closed" onChange={handleCheckboxChange} />
+        <input
+          type="checkbox"
+          value="Waiting"
+          onChange={handleCheckboxChange}
+          checked={filterCriteria === "Waiting"}
+        />
+        Waiting
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="Closed"
+          onChange={handleCheckboxChange}
+          checked={filterCriteria === "Closed"}
+        />
         Closed
       </label>
       <button onClick={handleCloseClick}>Close</button>

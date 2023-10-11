@@ -10,6 +10,7 @@ export default function Clients() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [totalFilteredPages, setTotalFilteredPages] = useState(1);
 
   const fetchClientData = async (page) => {
     try {
@@ -21,6 +22,8 @@ export default function Clients() {
       const totalHeader = response.headers.get("X-Total-Pages");
       const total = totalHeader ? parseInt(totalHeader, 10) : 1;
 
+      setTotalFilteredPages(total);
+
       setClients(data);
       setTotalPages(total);
     } catch (error) {
@@ -30,7 +33,7 @@ export default function Clients() {
 
   useEffect(() => {
     fetchClientData(currentPage);
-  }, [currentPage]);
+  }, [currentPage, filterCriteria]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -51,7 +54,6 @@ export default function Clients() {
   const handleFilterChange = (newFilterCriteria) => {
     setFilterCriteria(newFilterCriteria);
     setIsFilterModalOpen(false); // Close the filter modal
-    fetchClientData(1); // Fetch data for the first page with the new filter
   };
 
   // Generate an array of page numbers
@@ -131,14 +133,14 @@ export default function Clients() {
               </button>
 
               <div className="page-numbers">
-                {pageNumbers.map((pageNumber) => (
+                {Array.from({ length: totalFilteredPages }, (_, index) => (
                   <p
-                    key={pageNumber}
-                    className={currentPage === pageNumber ? "active-page" : ""}
-                    onClick={() => setCurrentPage(pageNumber)}
+                    key={index + 1}
+                    className={currentPage === index + 1 ? "active-page" : ""}
+                    onClick={() => setCurrentPage(index + 1)}
                     style={{ cursor: "pointer" }}
                   >
-                    {pageNumber}
+                    {index + 1}
                   </p>
                 ))}
               </div>
@@ -158,7 +160,7 @@ export default function Clients() {
       {isFilterModalOpen && (
         <FilterModal
           isFilterModalOpen={isFilterModalOpen}
-          onFilterChange={handleFilterChange}
+          onFilterChange={handleFilterChange} // Ensure this is correct
           onClose={() => setIsFilterModalOpen(false)}
         />
       )}

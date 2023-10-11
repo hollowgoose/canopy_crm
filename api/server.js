@@ -13,7 +13,7 @@ const corsOptions = {
   allowedHeaders: "X-Total-Pages",
 };
 
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
@@ -109,6 +109,7 @@ app.get("/api/clients", async (req, res) => {
   const page = req.query.page || 1;
   const itemsPerPage = 10;
   const offset = (page - 1) * itemsPerPage;
+  const filterCriteria = req.query.filter;
 
   const countSql = "SELECT COUNT(*) AS total FROM clients";
 
@@ -121,21 +122,74 @@ app.get("/api/clients", async (req, res) => {
     const totalRows = countResult[0].total;
     const totalPages = Math.ceil(totalRows / itemsPerPage);
 
-    const sql = `SELECT * FROM clients ORDER BY first_name ASC LIMIT ${itemsPerPage} OFFSET ${offset}`;
+    let sql;
+    const sqlParams = [];
 
-    db.query(sql, (err, data) => {
+    if (filterCriteria && filterCriteria !== "All") {
+      sql = `SELECT * FROM clients WHERE status = ? ORDER BY first_name ASC LIMIT ${itemsPerPage} OFFSET ${offset}`;
+      sqlParams.push(filterCriteria);
+    } else {
+      sql = `SELECT * FROM clients ORDER BY first_name ASC LIMIT ${itemsPerPage} OFFSET ${offset}`;
+    }
+
+    db.query(sql, sqlParams, (err, data) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ error: "Error fetching clients" });
       }
 
       res.setHeader("Access-Control-Expose-Headers", "X-Total-Pages");
-
       res.setHeader("X-Total-Pages", totalPages);
 
       return res.json(data);
     });
   });
+});
+
+// Add Appintment
+app.post("api/appointments/add", (req, res) => {
+  try {
+    const { date, start_time, end_time, client_id, user_id } = req.body;
+
+    const insertApptSql =
+      "INSERT INTO appointments (date, start_time, end_time, client_id, user_id) VALUES (?, ?, ?, ?, ?)";
+
+    db.query(
+      insertSql,
+      [date, start_time, end_time, client_id, user_id],
+      (err, result) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: "Error adding appointment" });
+        }
+      }
+    );
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+// Get Appointment
+app.get("/api/appointments", (req, res) => {
+  try {
+    const { date, start_time, end_time, client_id, user_id } = req.body;
+
+    const getApptSql = "SELECT * FROM appointments";
+
+    db.query(
+      getApptSql,
+      [date, start_time, end_time, client_id, user_id],
+      (err, result) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: "Error getting appointments" });
+        }
+        return res.status(201).json({ result });
+      }
+    );
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 // Client Details

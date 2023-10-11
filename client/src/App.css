@@ -450,6 +450,17 @@ a {
   text-align: center;
 }
 
+.client-status-waiting {
+  background-color: rgb(223, 0, 231);
+  color: white;
+  padding: 2px;
+  width: 75px;
+  margin: 0 auto;
+  border-radius: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
 /* Add Clients */
 
 .form-group {
