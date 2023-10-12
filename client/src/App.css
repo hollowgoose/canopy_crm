@@ -345,7 +345,7 @@ a {
 .client-table tbody i:hover {
   color: #40c551;
   scale: 1.15;
-  text-shadow: 2px 2px 2px #2e2e2e;
+  /* text-shadow: 2px 2px 2px #2e2e2e; */
 }
 
 .client-table tbody tr:nth-child(odd) {
@@ -485,6 +485,33 @@ a {
   padding: 10px;
 }
 
+.appt-user-list {
+  height: 25vh;
+  border: 1px solid #b3b3b3;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+
+.appt-user-list label {
+  background-color: green;
+}
+
+.appt-user-list li {
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.appt-user-list li.selected {
+  background-color: #3399ff; /* Selected item background color */
+  color: white; /* Text color for selected item */
+}
+
+.vertical {
+  width: 49%;
+  display: flex;
+  flex-direction: column;
+}
+
 .form-inner-section {
   border: 1px solid #b3b3b3;
   border-radius: 10px;
@@ -492,23 +519,28 @@ a {
   margin-bottom: 20px;
 }
 
-#add-client-form label {
+#add-client-form label,
+#add-appt-form label {
   font-size: 18px;
   font-weight: 500;
+  margin-bottom: 5px;
 }
 
 #add-client-form input,
+#add-appt-form input,
 select {
   font-size: 18px;
   margin-bottom: 8px;
 }
 
-#add-client-form input {
+#add-client-form input,
+#add-appt-form input {
   width: 100%;
   padding: 5px;
 }
 
-#add-client-form input[type="submit"] {
+#add-client-form input[type="submit"],
+#add-appt-form input[type="submit"] {
   width: 100%;
   padding: 8px;
   align-items: center;
@@ -517,7 +549,8 @@ select {
   margin-top: 20px;
 }
 
-#add-client-form input[type="submit"]:hover {
+#add-client-form input[type="submit"]:hover,
+#add-appt-form input[type="submit"]:hover {
   scale: 1.015;
 }
 
@@ -785,4 +818,10 @@ h2 {
 
 .right {
   float: right;
+}
+
+/* ADD APPOINTMENTS */
+.appt-form-group {
+  display: flex;
+  flex-direction: column;
 }

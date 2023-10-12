@@ -15,7 +15,7 @@ export default function Clients() {
   const fetchClientData = async (page) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/clients?page=${page}&filter=${filterCriteria}`
+        `http://localhost:3000/api/clients/list?page=${page}&filter=${filterCriteria}`
       );
       const data = await response.json();
 

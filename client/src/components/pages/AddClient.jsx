@@ -9,21 +9,30 @@ export default function AddClient() {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    console.log(formData);
-    const response = await fetch("http://localhost:3000/api/clients/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams(formData),
-    });
+    console.log("FormData:", formData); // Log the FormData to check if it's populated correctly
 
-    if (response.ok) {
-      console.log("Client added successfully!");
-      // Do more after success
-      navigate("/clients");
-    } else {
-      console.error("Failed to add Client");
+    try {
+      const response = await fetch("http://localhost:3000/api/clients/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(formData),
+      });
+
+      console.log("Response:", response); // Log the response
+
+      if (response.ok) {
+        console.log("Client added successfully!");
+        // Do more after success
+        navigate("/clients");
+      } else {
+        console.error("Failed to add Client");
+        console.log("Response Status:", response.status); // Log the response status
+        console.log("Response Text:", await response.text()); // Log the response text
+      }
+    } catch (error) {
+      console.error("Error in fetch:", error); // Log any fetch-related errors
     }
   };
 

@@ -10,10 +10,11 @@ const app = express();
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "X-Total-Pages",
+  allowedHeaders: "X-Total-Pages, Content-Type",
 };
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
@@ -41,9 +42,10 @@ app.post("/api/clients/add", (req, res) => {
       PHQ9,
     } = req.body;
 
+    console.log(req.body);
+
     // Check if a client with the same email or telephone already exists
-    const checkSql =
-      "SELECT COUNT(*) AS count FROM clients WHERE email = ? OR home_tel = ? OR mobile_tel = ?";
+    const checkSql = "SELECT COUNT(*) AS count FROM clients WHERE email = ?";
     db.query(
       checkSql,
       [email, home_tel, mobile_tel],
@@ -60,7 +62,7 @@ app.post("/api/clients/add", (req, res) => {
         if (existingClientCount > 0) {
           // A client with the same email or telephone already exists
           return res.status(400).json({
-            error: "Client with the same email or telephone already exists",
+            error: "Client with the same email already exists",
           });
         }
 
@@ -104,8 +106,25 @@ app.post("/api/clients/add", (req, res) => {
   }
 });
 
-// Get Client(s)
-app.get("/api/clients", async (req, res) => {
+// Get all Clients
+app.get("/api/clients", (req, res) => {
+  try {
+    const sql = "SELECT * FROM clients";
+
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Error getting clients" });
+      }
+      return res.status(201).json({ result });
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// Get Client List for Display
+app.get("/api/clients/list", async (req, res) => {
   const page = req.query.page || 1;
   const itemsPerPage = 10;
   const offset = (page - 1) * itemsPerPage;
@@ -151,11 +170,13 @@ app.post("/api/appointments/add", (req, res) => {
   try {
     const { type, date, start_time, end_time, client_id, user_id } = req.body;
 
+    console.log(req.body);
+
     const insertApptSql =
       "INSERT INTO appointments (type, date, start_time, end_time, client_id, user_id) VALUES (?, ?, ?, ?, ?, ?)";
 
     db.query(
-      insertSql,
+      insertApptSql,
       [type, date, start_time, end_time, client_id, user_id],
       (err, result) => {
         if (err) {
@@ -207,6 +228,23 @@ app.get("/api/clients/:clientId", async (req, res) => {
     const clientDetails = data[0];
     return res.json(clientDetails);
   });
+});
+
+// Get Users
+app.get("/api/users", (req, res) => {
+  try {
+    const sql = "SELECT * FROM users";
+
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Error getting users" });
+      }
+      return res.status(201).json({ result });
+    });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 app.listen(port, () => {

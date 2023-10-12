@@ -5,6 +5,9 @@ import ClientDetails from "./components/pages/ClientDetails";
 import "./App.css";
 import Dashboard from "./components/pages/Dashboard";
 import AddClient from "./components/pages/AddClient";
+import Appointments from "./components/pages/Appointments";
+import Reports from "./components/pages/Reports";
+import AddAppointment from "./components/pages/AddAppointment";
 
 function App() {
   return (
@@ -12,9 +15,12 @@ function App() {
       <div className="container">
         <Routes>
           <Route element={<Clients />} path="/clients" />
+          <Route element={<AddClient />} path="/clients/add" />
           <Route element={<ClientDetails />} path="/clients/:clientId" />
           <Route element={<Dashboard />} path="/" />
-          <Route element={<AddClient />} path="/clients/add" />
+          <Route element={<Appointments />} path="/appointments" />
+          <Route element={<AddAppointment />} path="/appointments/add" />
+          <Route element={<Reports />} path="/reports" />
         </Routes>
       </div>
     </Router>
