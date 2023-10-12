@@ -502,7 +502,7 @@ a {
 }
 
 .appt-user-list li.selected {
-  background-color: #3399ff; /* Selected item background color */
+  background-color: #40c551; /* Selected item background color */
   color: white; /* Text color for selected item */
 }
 

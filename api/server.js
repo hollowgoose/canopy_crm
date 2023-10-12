@@ -170,8 +170,6 @@ app.post("/api/appointments/add", (req, res) => {
   try {
     const { type, date, start_time, end_time, client_id, user_id } = req.body;
 
-    console.log(req.body);
-
     const insertApptSql =
       "INSERT INTO appointments (type, date, start_time, end_time, client_id, user_id) VALUES (?, ?, ?, ?, ?, ?)";
 

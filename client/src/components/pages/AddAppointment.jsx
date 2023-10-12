@@ -17,7 +17,35 @@ export default function AddAppointment() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted");
+
+    // Gather form data
+    const formData = new FormData(document.getElementById("add-appt-form"));
+
+    // Debug: Log the form data before sending it
+    console.log("Form Data:", Object.fromEntries(formData.entries()));
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/appointments/add",
+        {
+          method: "POST",
+          body: new URLSearchParams(formData),
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Handle a successful response (e.g., show a success message)
+        console.log("Appointment added successfully!");
+      } else {
+        // Log the error details for debugging
+        console.error(`Error: ${response.status} - ${response.statusText}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const fetchClients = async () => {
@@ -42,7 +70,7 @@ export default function AddAppointment() {
         },
       });
       const data = await response.json();
-      setUsers(data);
+      setUsers(data.result);
     } catch (err) {
       console.error(err);
     }
@@ -75,7 +103,7 @@ export default function AddAppointment() {
               <label htmlFor="title">
                 Appointment Type<span className="required">*</span>:
               </label>
-              <select className="input-style" name="title" required>
+              <select className="input-style" name="type" required>
                 <option value="drop_in">Drop-In</option>
                 <option value="session">Session</option>
                 <option value="meeting">Meeting</option>
@@ -100,6 +128,9 @@ export default function AddAppointment() {
               </label>
               <input type="time" name="end_time" required />
             </div>
+
+            <input type="hidden" name="client_id" value={selectedClient} />
+            <input type="hidden" name="user_id" value={selectedUser} />
 
             <div className="form-group">
               <div className="vertical">
@@ -131,9 +162,26 @@ export default function AddAppointment() {
               </div>
 
               <div className="vertical">
-                <label htmlFor="client_id">Attending User:</label>
-                <div className="appt-user-list">
-                  {/* User list will be rendered here */}
+                <label htmlFor="user_id">Attending User:</label>
+                <div className="appt-user-list" id="userList">
+                  <ul>
+                    {users.length > 0 ? (
+                      users.map((user) => (
+                        <li
+                          key={user.user_id}
+                          onClick={() => handleUserSelection(user.user_id)} // Use client.client_id
+                          data-user-id={user.user_id}
+                          className={
+                            selectedUser === user.user_id ? "selected" : "" // Use client.client_id
+                          }
+                        >
+                          {user.first_name} {user.last_name}
+                        </li>
+                      ))
+                    ) : (
+                      <p>Loading users...</p>
+                    )}
+                  </ul>
                 </div>
               </div>
             </div>
