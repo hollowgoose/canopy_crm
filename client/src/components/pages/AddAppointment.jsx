@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
 
 export default function AddAppointment() {
+  const navigate = useNavigate();
+
   const [clients, setClients] = useState([""]);
   const [users, setUsers] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
@@ -39,6 +42,7 @@ export default function AddAppointment() {
       if (response.ok) {
         // Handle a successful response (e.g., show a success message)
         console.log("Appointment added successfully!");
+        navigate("/appointments");
       } else {
         // Log the error details for debugging
         console.error(`Error: ${response.status} - ${response.statusText}`);
@@ -90,7 +94,7 @@ export default function AddAppointment() {
       <div className="main-content">
         <div className="header-container">
           <h1 className="page-header">Add an Appointment</h1>
-          <a href="/clients">
+          <a href="/appointments">
             <button className="other-button-style">
               <i className="fa-regular fa-circle-xmark"></i> Exit
             </button>

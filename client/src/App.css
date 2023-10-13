@@ -531,6 +531,7 @@ a {
 select {
   font-size: 18px;
   margin-bottom: 8px;
+  width: 10%;
 }
 
 #add-client-form input,
@@ -824,4 +825,9 @@ h2 {
 .appt-form-group {
   display: flex;
   flex-direction: column;
+}
+
+/* CALENDARS */
+.calendar-container {
+  height: 100%;
 }
