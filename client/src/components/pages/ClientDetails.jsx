@@ -22,27 +22,16 @@ export default function ClientDetails() {
       });
   }, [clientId]);
 
-  //   useEffect(() => {
-  //     fetch(`http://localhost:3000/api/notes/${clientId}`)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setNoteDetails(data);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching notes:", error);
-  //       });
-  //   }, [clientId]);
-
-  //   useEffect(() => {
-  //     fetch(`http://localhost:3000/api/appointments/${clientId}`)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setAppointments(data);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching appointments: ", error);
-  //       });
-  //   }, []);
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/appointments/${clientId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setAppointments(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching appointments:", error);
+      });
+  });
 
   if (!clientDetails) {
     return <div>Loading...</div>;
@@ -134,49 +123,16 @@ export default function ClientDetails() {
           <div className="appointments-wrapper">
             <h2 className="small-heading">Appointments</h2>
 
-            {appointments.map((appointment) => {
-              // Split the time string by ":" to get hours and minutes
-              const timeParts = appointment.time.split(":");
-              const hours = parseInt(timeParts[0], 10); // Parse the hours as an integer
-              const minutes = timeParts[1].toString().padStart(2, "0");
-
-              // Create a Date object from the date string
-              const appointmentDate = new Date(appointment.date);
-
-              // Get the day, month, and year
-              const day = appointmentDate.getDate().toString().padStart(2, "0");
-              const month = (appointmentDate.getMonth() + 1)
-                .toString()
-                .padStart(2, "0"); // Month is zero-based, so add 1
-              const year = appointmentDate.getFullYear();
-
-              // Determine if it's AM or PM
-              const ampm = hours >= 12 ? "PM" : "AM";
-
-              // Convert hours to 12-hour format
-              const formattedHours = hours % 12 || 12;
-
-              // Format the date as 'DD-MM-YYYY'
-              const formattedDate = `${day}/${month}/${year}`;
-
-              // Format the time as 'HH:MM AM/PM'
-              const formattedTime = `${formattedHours}:${minutes} ${ampm}`;
-
-              return (
-                <div key={appointment.id} className="appointment-item">
-                  <div className="appointment-details">
-                    <h3>{appointment.title}</h3>
-                    <p>{formattedDate}</p>
-                    <p>{formattedTime}</p>
-                  </div>
-                  <div className="appointment-button">
-                    <Link to={"#"}>
-                      <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                    </Link>
-                  </div>
+            <div className="appointment-details">
+              {appointments.map((appointment, index) => (
+                <div key={index} className="appointment">
+                  <p>Date: {appointment.date}</p>
+                  <p>Time: {appointment.time}</p>
+                  <p>Description: {appointment.description}</p>
+                  {/* Add more appointment details as needed */}
                 </div>
-              );
-            })}
+              ))}
+            </div>
 
             <div className="box-controls">
               <button className="other-button-style">Create Appointment</button>

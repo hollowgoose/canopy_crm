@@ -209,6 +209,25 @@ app.get("/api/appointments", (req, res) => {
   }
 });
 
+app.get("/api/appointments/:clientId", async (req, res) => {
+  const clientId = req.params.clientId;
+
+  const sql =
+    "SELECT * FROM appointments WHERE client_id = ? AND date > CURDATE()";
+  db.query(sql, [clientId], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Error fetching client appointments" });
+    }
+    if (data.length === 0) {
+      return res.status(404).json({ error: "Appointments not found" });
+    }
+    return res.json({ data });
+  });
+});
+
 // Client Details
 app.get("/api/clients/:clientId", async (req, res) => {
   const clientId = req.params.clientId;

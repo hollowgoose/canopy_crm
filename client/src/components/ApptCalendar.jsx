@@ -10,6 +10,7 @@ const typeMappings = {
   meeting: "Meeting",
   assessment: "Assessment",
   session: "Session",
+  initial_session: "Initial Session",
   // Add more mappings as needed
 };
 
