@@ -3,16 +3,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import EventComponent from "./EventComponent";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-
-const typeMappings = {
-  drop_in: "Drop-In",
-  appointment: "Appointment",
-  meeting: "Meeting",
-  assessment: "Assessment",
-  session: "Session",
-  initial_session: "Initial Session",
-  // Add more mappings as needed
-};
+import { typeMappings } from "../utils/formatUtils";
 
 export default function ApptCalendar() {
   const [appointments, setAppointments] = useState([]);

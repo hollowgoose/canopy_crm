@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getStatusClass } from "../../utils/statusUtils";
 import Navbar from "../Navbar";
+import {
+  formatDate,
+  formatTime,
+  mapAppointmentType,
+} from "../../utils/formatUtils";
 
 export default function ClientDetails() {
   const { clientId } = useParams();
@@ -24,14 +29,27 @@ export default function ClientDetails() {
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/appointments/${clientId}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 404) {
+          // No appointments found for this client
+          return [];
+        }
+        return response.json();
+      })
       .then((data) => {
-        setAppointments(data.data);
+        if (Array.isArray(data.data)) {
+          setAppointments(data.data);
+        } else {
+          // Handle unexpected data format, e.g., by setting appointments to an empty array
+          setAppointments([]);
+        }
       })
       .catch((error) => {
         console.error("Error fetching appointments:", error);
+        // Handle the error, e.g., display a message or set appointments to an empty array
+        setAppointments([]);
       });
-  });
+  }, [clientId]);
 
   if (!clientDetails) {
     return <div>Loading...</div>;
@@ -123,73 +141,49 @@ export default function ClientDetails() {
           <div className="appointments-wrapper">
             <h2 className="small-heading">Appointments</h2>
 
-            <div className="appointment-details">
-              {appointments.map((appointment, index) => (
-                <div key={index} className="appointment">
-                  <p>Date: {appointment.date}</p>
-                  <p>Time: {appointment.time}</p>
-                  <p>Description: {appointment.description}</p>
-                  {/* Add more appointment details as needed */}
-                </div>
-              ))}
-            </div>
+            <table className="appt-table">
+              <thead>
+                <tr>
+                  <th className="flex-1">Type</th>
+                  <th className="flex-1">Start</th>
+                  <th className="flex-1">End</th>
+                  <th className="flex-1">Date</th>
+                </tr>
+              </thead>
+              {appointments.length === 0 ? (
+                <tbody>
+                  <tr>
+                    <td colSpan="4">No Appointments</td>
+                  </tr>
+                </tbody>
+              ) : (
+                <tbody>
+                  {appointments.map((appointment, index) => (
+                    <tr key={appointment.appt_id}>
+                      <td>{mapAppointmentType(appointment.type)}</td>
+                      <td>{formatTime(appointment.start_time)}</td>
+                      <td>{formatTime(appointment.end_time)}</td>
+                      <td>{formatDate(appointment.date)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </table>
 
             <div className="box-controls">
-              <button className="other-button-style">Create Appointment</button>
+              <Link to={`/appointments/create?clientId=${clientId}`}>
+                <button className="other-button-style">
+                  Create Appointment
+                </button>
+              </Link>
               <button className="other-button-style">View All</button>
             </div>
           </div>
 
-          <div className="notes-wrapper">
+          <div className="comms-wrapper">
             <div className="notes-title-container">
               <h2 className="small-heading">Notes</h2>
             </div>
-
-            {notes.map((note) => {
-              // Split the time string by ":" to get hours and minutes
-              const timeParts = note.time.split(":");
-              const hours = parseInt(timeParts[0], 10); // Parse the hours as an integer
-              const minutes = timeParts[1].toString().padStart(2, "0");
-
-              // Create a Date object from the date string
-              const noteDate = new Date(note.date);
-
-              // Get the day, month, and year
-              const day = noteDate.getDate().toString().padStart(2, "0");
-              const month = (noteDate.getMonth() + 1)
-                .toString()
-                .padStart(2, "0"); // Month is zero-based, so add 1
-              const year = noteDate.getFullYear();
-
-              // Determine if it's AM or PM
-              const ampm = hours >= 12 ? "PM" : "AM";
-
-              // Convert hours to 12-hour format
-              const formattedHours = hours % 12 || 12;
-
-              // Format the date as 'DD-MM-YYYY'
-              const formattedDate = `${day}/${month}/${year}`;
-
-              // Format the time as 'HH:MM AM/PM'
-              const formattedTime = `${formattedHours}:${minutes} ${ampm}`;
-
-              return (
-                <div className="note-group">
-                  <div key={note.id} className="note-container">
-                    <div className="note-header">
-                      <div>
-                        <p>{formattedDate}</p>
-                        <p>{formattedTime}</p>
-                      </div>
-                      <p>Submitted by: {note.user_id}</p>
-                    </div>
-                    <div className="note-content">
-                      <p>{note.content}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
 
             <div className="box-controls">
               <button className="other-button-style">Create Note</button>

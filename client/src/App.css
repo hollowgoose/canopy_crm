@@ -632,7 +632,7 @@ h2 {
 .client-contact .small-heading,
 .client-address .small-heading,
 .appointments-wrapper .small-heading,
-.notes-wrapper .small-heading {
+.comms-wrapper .small-heading {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: #40c551;
@@ -661,69 +661,28 @@ h2 {
   align-items: start;
 }
 
-.notes-wrapper,
+.comms-wrapper,
 .appointments-wrapper {
   margin: 5px 10px;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
 }
 
-.notes-wrapper {
+.comms-wrapper {
   width: 50%;
 }
 
-.note-group {
-  border-bottom: 1px solid #bcbcbc;
-  max-height: 560px;
+.appt-table {
+  overflow-y: auto;
+  width: 100%;
 }
 
-.note-header {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 500;
-  margin-bottom: 5px;
+.appt-table thead {
+  background-color: #b0e7b7;
 }
 
-.note-header div {
-  display: flex;
-}
-
-.note-header div p:last-child {
-  margin-left: 15px;
-}
-
-.note-container {
-  padding: 10px;
-}
-
-.appointments-wrapper {
-  width: 50%;
-}
-
-.appointment-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 20px;
-  border-bottom: 1px solid #bcbcbc;
-}
-
-.appointment-item:last-child {
-  border: 0;
-}
-
-.appointment-item h3 {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.appointment-item i {
-  font-size: 25px;
-  background-color: #40c551;
-  border-radius: 10px;
-  padding: 8px;
-  color: white;
-  transition: 0.2s;
+.appt-table td {
+  text-align: center;
 }
 
 .box-controls {
@@ -732,7 +691,7 @@ h2 {
   padding: 10px;
 }
 
-.box-controls button {
+.box-controls button:first-child {
   margin-right: 20px;
 }
 
@@ -830,4 +789,12 @@ h2 {
 /* CALENDARS */
 .calendar-container {
   height: 85%;
+}
+
+.appointments-wrapper {
+  width: 50%;
+}
+
+.appointment {
+  display: flex;
 }
