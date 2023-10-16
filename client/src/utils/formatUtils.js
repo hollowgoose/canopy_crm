@@ -28,6 +28,8 @@ export const typeMappings = {
   assessment: "Assessment",
   session: "Session",
   initial_session: "Initial Session",
+  final_session: "Final Session",
+  supervision: "Supervision",
   // Add more mappings as needed
 };
 

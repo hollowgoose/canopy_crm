@@ -141,34 +141,36 @@ export default function ClientDetails() {
           <div className="appointments-wrapper">
             <h2 className="small-heading">Appointments</h2>
 
-            <table className="appt-table">
-              <thead>
-                <tr>
-                  <th className="flex-1">Type</th>
-                  <th className="flex-1">Start</th>
-                  <th className="flex-1">End</th>
-                  <th className="flex-1">Date</th>
-                </tr>
-              </thead>
-              {appointments.length === 0 ? (
-                <tbody>
+            <div className="scrollable-box">
+              <table className="appt-table">
+                <thead>
                   <tr>
-                    <td colSpan="4">No Appointments</td>
+                    <th className="flex-1">Type</th>
+                    <th className="flex-1">Start</th>
+                    <th className="flex-1">End</th>
+                    <th className="flex-1">Date</th>
                   </tr>
-                </tbody>
-              ) : (
-                <tbody>
-                  {appointments.map((appointment, index) => (
-                    <tr key={appointment.appt_id}>
-                      <td>{mapAppointmentType(appointment.type)}</td>
-                      <td>{formatTime(appointment.start_time)}</td>
-                      <td>{formatTime(appointment.end_time)}</td>
-                      <td>{formatDate(appointment.date)}</td>
+                </thead>
+                {appointments.length === 0 ? (
+                  <tbody>
+                    <tr>
+                      <td colSpan="4">No Appointments</td>
                     </tr>
-                  ))}
-                </tbody>
-              )}
-            </table>
+                  </tbody>
+                ) : (
+                  <tbody>
+                    {appointments.map((appointment, index) => (
+                      <tr key={appointment.appt_id}>
+                        <td>{mapAppointmentType(appointment.type)}</td>
+                        <td>{formatTime(appointment.start_time)}</td>
+                        <td>{formatTime(appointment.end_time)}</td>
+                        <td>{formatDate(appointment.date)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
+              </table>
+            </div>
 
             <div className="box-controls">
               <Link to={`/appointments/create?clientId=${clientId}`}>
@@ -182,8 +184,10 @@ export default function ClientDetails() {
 
           <div className="comms-wrapper">
             <div className="notes-title-container">
-              <h2 className="small-heading">Notes</h2>
+              <h2 className="small-heading">Communications</h2>
             </div>
+
+            <div className="scrollable-box"></div>
 
             <div className="box-controls">
               <button className="other-button-style">Create Note</button>

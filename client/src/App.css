@@ -492,6 +492,13 @@ a {
   overflow-y: auto;
 }
 
+.single-appt-user-list {
+  height: 100%;
+  border: 1px solid #b3b3b3;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+
 .appt-user-list label {
   background-color: green;
 }
@@ -501,9 +508,14 @@ a {
   padding: 0 10px;
 }
 
-.appt-user-list li.selected {
+.appt-user-list li.selected,
+.single-appt-user-list li.selected {
   background-color: #40c551; /* Selected item background color */
   color: white; /* Text color for selected item */
+}
+
+.single-appt-user-list ul li {
+  padding: 0 5px;
 }
 
 .vertical {
@@ -677,12 +689,21 @@ h2 {
   width: 100%;
 }
 
+.appt-table tbody tr {
+  border-bottom: 1px solid black;
+}
+
+.scrollable-box {
+  max-height: 250px; /* Adjust the value to your preferred maximum height */
+  overflow-y: auto;
+}
 .appt-table thead {
   background-color: #b0e7b7;
 }
 
 .appt-table td {
   text-align: center;
+  padding: 5px 0;
 }
 
 .box-controls {
@@ -797,4 +818,8 @@ h2 {
 
 .appointment {
   display: flex;
+}
+
+.main-content .rbc-today {
+  background-color: rgb(176, 207, 176);
 }

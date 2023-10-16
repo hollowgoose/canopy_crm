@@ -5,6 +5,7 @@ const db = mysql.createPool({
   user: "root",
   password: "mysql",
   database: "canopycrm",
+  timezone: "+01:00",
   connectionLimit: 10,
 });
 

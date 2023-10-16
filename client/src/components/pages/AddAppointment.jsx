@@ -140,7 +140,7 @@ export default function AddAppointment() {
               <div className="vertical">
                 <label htmlFor="client_id">Attending Client:</label>
                 <div className="appt-user-list" id="clientList">
-                  <ul>
+                  <ul key="clients-list">
                     {clients.length > 0 ? (
                       clients.map((client) => (
                         <li
@@ -168,7 +168,7 @@ export default function AddAppointment() {
               <div className="vertical">
                 <label htmlFor="user_id">Attending User:</label>
                 <div className="appt-user-list" id="userList">
-                  <ul>
+                  <ul key="users-list">
                     {users.length > 0 ? (
                       users.map((user) => (
                         <li

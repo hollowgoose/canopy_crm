@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
+import "moment-timezone";
 import EventComponent from "./EventComponent";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { typeMappings } from "../utils/formatUtils";
+import { typeMappings, formatDate } from "../utils/formatUtils";
 
 export default function ApptCalendar() {
+  // Set the desired time zone (e.g., UK/London)
+  const londonTimezone = "Europe/London";
+
+  // Set the default time zone for Moment.js
+  moment.tz.setDefault(londonTimezone);
+
   const [appointments, setAppointments] = useState([]);
   const [formattedAppointments, setFormattedAppointments] = useState([]);
 
@@ -18,37 +25,43 @@ export default function ApptCalendar() {
   }, []);
 
   useEffect(() => {
-    // Function to format the appointments for the calendar
     const formatAppointmentsForCalendar = () => {
       const formattedEvents = appointments.map((appointment) => {
-        const dateParts = appointment.date.split("-"); // Assuming date is in "YYYY-MM-DD" format
-        const timeParts = appointment.start_time.split(":"); // Assuming time is in "HH:mm" format
+        // Remove the unwanted time part
+        const dateWithoutTime = appointment.date.split("T")[0];
+        console.log(dateWithoutTime);
 
-        const year = parseInt(dateParts[0]);
-        const month = parseInt(dateParts[1]) - 1; // Months are 0-based in JavaScript
-        const day = parseInt(dateParts[2]);
-        const hours = parseInt(timeParts[0]);
-        const minutes = parseInt(timeParts[1]);
+        // Combine date and time to create start and end DateTime strings
+        const startDateTime = `${dateWithoutTime}T${appointment.start_time}`;
+        console.log(startDateTime);
+        const endDateTime = `${dateWithoutTime}T${appointment.end_time}`;
+        console.log(endDateTime);
 
-        const start = new Date(year, month, day, hours, minutes);
+        // Create JavaScript Date objects for start and end
+        const start = new Date(startDateTime);
+        console.log(start);
+        const end = new Date(endDateTime);
+        console.log(end);
 
-        // Repeat the same process for the end time
-        const endParts = appointment.end_time.split(":");
-        const endHours = parseInt(endParts[0]);
-        const endMinutes = parseInt(endParts[1]);
-        const end = new Date(year, month, day, endHours, endMinutes);
+        // Convert to BST time zone
+        const londonTimeZone = "Europe/London";
+        const startBST = moment(start).tz(londonTimeZone).toDate();
+        console.log(startBST);
+        const endBST = moment(end).tz(londonTimeZone).toDate();
+        console.log(endBST);
 
         const title = typeMappings[appointment.type] || appointment.type;
 
         return {
           title,
-          start,
-          end,
+          start: startBST,
+          end: endBST,
           location: "Sight Support Centre",
           description: "A meeting!",
         };
       });
 
+      console.log("Formatted Appointments:", formattedEvents);
       setFormattedAppointments(formattedEvents);
     };
 
