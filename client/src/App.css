@@ -820,6 +820,7 @@ h2 {
   display: flex;
 }
 
-.main-content .rbc-today {
-  background-color: rgb(176, 207, 176);
-}
+/* RBC OVERRIDES */
+/* .main-content .rbc-today {
+  background-color: rgb(209, 235, 209);
+} */

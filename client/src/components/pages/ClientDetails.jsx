@@ -149,6 +149,9 @@ export default function ClientDetails() {
                     <th className="flex-1">Start</th>
                     <th className="flex-1">End</th>
                     <th className="flex-1">Date</th>
+                    <th className="flex-0.5">
+                      <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                    </th>
                   </tr>
                 </thead>
                 {appointments.length === 0 ? (
@@ -165,6 +168,13 @@ export default function ClientDetails() {
                         <td>{formatTime(appointment.start_time)}</td>
                         <td>{formatTime(appointment.end_time)}</td>
                         <td>{formatDate(appointment.date)}</td>
+                        <td>
+                          <Link
+                            to={`/appointments/${appointment.appt_id}?apptClient=${clientId}`}
+                          >
+                            <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                          </Link>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

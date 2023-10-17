@@ -43,3 +43,27 @@ export async function getUserList() {
     console.error(error);
   }
 }
+
+// Get User Appt
+export async function getIndividualAppointment(apptId) {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/appointment/${apptId}`,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      console.error(`Error: ${response.status} - ${response.statusText}`);
+      return null;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}

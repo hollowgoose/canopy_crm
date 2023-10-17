@@ -70,6 +70,13 @@ export default function ApptCalendar() {
 
   const localizer = momentLocalizer(moment);
 
+  const initialDate = moment().set({
+    hour: 9,
+    minute: 0,
+    second: 0,
+    millisecond: 0,
+  });
+
   return (
     <div className="calendar-container">
       <Calendar

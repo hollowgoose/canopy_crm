@@ -7,6 +7,8 @@ const port = 3000;
 
 const app = express();
 
+process.env.TZ = "Europe/London";
+
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -211,11 +213,34 @@ app.get("/api/appointments", (req, res) => {
   }
 });
 
+// Get Individual Appointment
+app.get("/api/appointment/:apptId", async (req, res) => {
+  const apptId = req.params.apptId;
+
+  const sql = "SELECT * FROM appointments WHERE appt_id = ?";
+
+  db.query(sql, [apptId], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Error fetching client appointments" });
+    }
+    if (data.length === 0) {
+      console.log("No appointment found for apptId:", apptId);
+      return res.status(404).json({ error: "Appointment not found" });
+    }
+    console.log("Found appointment for apptId:", apptId);
+    return res.json({ data });
+  });
+});
+
+// Get Specific Client Appointments
 app.get("/api/appointments/:clientId", async (req, res) => {
   const clientId = req.params.clientId;
 
   const sql =
-    "SELECT * FROM appointments WHERE client_id = ? AND date > CURDATE()";
+    "SELECT * FROM appointments WHERE client_id = ? AND date > CURDATE() ORDER BY date ASC";
   db.query(sql, [clientId], (err, data) => {
     if (err) {
       console.error(err);
@@ -264,6 +289,23 @@ app.get("/api/users", (req, res) => {
   } catch (err) {
     console.error(err);
   }
+});
+
+// Get Individual User
+app.get("/api/users/:userId", (req, res) => {
+  const userId = req.params.userId;
+
+  const sql = "SELECT first_name, last_name FROM users WHERE user_id = ?";
+  db.query(sql, [userId], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Error fetching user" });
+    }
+    if (data.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    return res.status(200).json(data);
+  });
 });
 
 app.listen(port, () => {

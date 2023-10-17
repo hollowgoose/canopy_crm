@@ -9,6 +9,7 @@ import Appointments from "./components/pages/Appointments";
 import Reports from "./components/pages/Reports";
 import AddAppointment from "./components/pages/AddAppointment";
 import AddIndidividualAppointment from "./components/pages/AddIndividualAppointment";
+import IndividualAppointment from "./components/pages/IndividualAppointment";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
           <Route element={<Dashboard />} path="/" />
           <Route element={<Appointments />} path="/appointments" />
           <Route element={<AddAppointment />} path="/appointments/add" />
+          <Route
+            element={<IndividualAppointment />}
+            path="/appointments/:apptId"
+          />
           <Route
             element={<AddIndidividualAppointment />}
             path="/appointments/create"
