@@ -10,6 +10,7 @@ import Reports from "./components/pages/Reports";
 import AddAppointment from "./components/pages/AddAppointment";
 import AddIndidividualAppointment from "./components/pages/AddIndividualAppointment";
 import IndividualAppointment from "./components/pages/IndividualAppointment";
+import EditClient from "./components/pages/EditClient";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             element={<AddIndidividualAppointment />}
             path="/appointments/create"
           />
+          <Route element={<EditClient />} path="/clients/edit" />
           <Route element={<Reports />} path="/reports" />
         </Routes>
       </div>

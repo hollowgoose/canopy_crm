@@ -1,4 +1,14 @@
-function formatDate(dateString) {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  return new Date(dateString).toLocaleDateString(undefined, options);
-}
+{appointments.length === 0 ? (
+              <p>No Appointments</p>
+            ) : (
+              <div className="appointment-details">
+                {appointments.map((appointment, index) => (
+                  <div key={index} className="appointment">
+                    <p>{formatDate(appointment.date)}</p>
+                    <p>Time: {appointment.time}</p>
+                    <p>Description: {appointment.description}</p>
+                    {/* Add more appointment details as needed */}
+                  </div>
+                ))}
+              </div>
+            )}

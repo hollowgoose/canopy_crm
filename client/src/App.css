@@ -148,6 +148,11 @@ a {
   text-align: center;
 }
 
+.header-buttons {
+  min-width: fit-content;
+  margin-left: 20px;
+}
+
 .header-buttons > a:first-child > button {
   margin-right: 15px;
 }
@@ -714,6 +719,10 @@ h2 {
 
 .box-controls button:first-child {
   margin-right: 20px;
+}
+
+.appointment-link {
+  margin: 0 5px;
 }
 
 /* LOGIN */

@@ -78,9 +78,11 @@ export default function ClientDetails() {
               </button>
             </a>
             <a href="/clients">
-              <button className="dark-button-style">
-                <i className="fa-regular fa-circle-xmark"></i> Exit
-              </button>
+              <Link to="/clients/edit" state={{ clientDetails: clientDetails }}>
+                <button className="dark-button-style">
+                  <i className="fa-regular fa-circle-xmark"></i> Exit
+                </button>
+              </Link>
             </a>
           </div>
         </div>
