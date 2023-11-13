@@ -6,10 +6,9 @@ import EventComponent from "./EventComponent";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { typeMappings, formatDate } from "../utils/formatUtils";
 
-export default function ApptCalendar() {
-  // Set the desired time zone (e.g., UK/London)
-  const londonTimezone = "Europe/London";
+const londonTimezone = "Europe/London";
 
+export default function ApptCalendar() {
   // Set the default time zone for Moment.js
   moment.tz.setDefault(londonTimezone);
 
@@ -27,6 +26,7 @@ export default function ApptCalendar() {
   useEffect(() => {
     const formatAppointmentsForCalendar = () => {
       const formattedEvents = appointments.map((appointment) => {
+        console.log("INIT DATE", appointment.date);
         // Remove the unwanted time part
         const dateWithoutTime = appointment.date.split("T")[0];
         console.log(dateWithoutTime);
@@ -43,19 +43,15 @@ export default function ApptCalendar() {
         const end = new Date(endDateTime);
         console.log(end);
 
-        // Convert to BST time zone
-        const londonTimeZone = "Europe/London";
-        const startBST = moment(start).tz(londonTimeZone).toDate();
-        console.log(startBST);
-        const endBST = moment(end).tz(londonTimeZone).toDate();
-        console.log(endBST);
-
         const title = typeMappings[appointment.type] || appointment.type;
+
+        const testDate = new Date("2023-11-13");
+        console.log("TEST", testDate);
 
         return {
           title,
-          start: startBST,
-          end: endBST,
+          start: start,
+          end: end,
           location: "Sight Support Centre",
           description: "A meeting!",
         };

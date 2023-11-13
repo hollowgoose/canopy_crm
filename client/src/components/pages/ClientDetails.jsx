@@ -72,18 +72,17 @@ export default function ClientDetails() {
           </div>
 
           <div className="header-buttons">
-            <a href="/clients/edit">
+            <Link to={`/clients/edit/${clientId}`}>
               <button className="other-button-style">
                 <i className="fa-regular fa-pen-to-square"></i> Edit Client
               </button>
-            </a>
-            <a href="/clients">
-              <Link to="/clients/edit" state={{ clientDetails: clientDetails }}>
-                <button className="dark-button-style">
-                  <i className="fa-regular fa-circle-xmark"></i> Exit
-                </button>
-              </Link>
-            </a>
+            </Link>
+
+            <Link to="/clients/">
+              <button className="dark-button-style">
+                <i className="fa-regular fa-circle-xmark"></i> Exit
+              </button>
+            </Link>
           </div>
         </div>
         <div className="client-details-wrapper">
