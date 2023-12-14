@@ -8,8 +8,8 @@ import {
     typeMappings,
     formatDate,
     formatTime,
-    formatTimeOnly,
     appointmentTypeColors,
+    formatTimeWithoutAmPm,
 } from "../utils/formatUtils";
 import { getClientById } from "../api/api";
 
@@ -65,7 +65,7 @@ export default function ApptCalendar() {
                 const title =
                     typeMappings[appointment.type] || appointment.type;
 
-                const s_time = formatTime(appointment.start_time);
+                const s_time = formatTimeWithoutAmPm(appointment.start_time);
                 const e_time = formatTime(appointment.end_time);
 
                 const timeRange = `${s_time} - ${e_time}`;
@@ -77,7 +77,7 @@ export default function ApptCalendar() {
 
                 return {
                     title,
-                    time: `${s_time}`,
+                    time: s_time,
                     clientName: `${clientName}`,
                     start: start,
                     end: end,

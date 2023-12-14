@@ -21,17 +21,17 @@ export function formatTime(timeString) {
     return `${time} ${ampm}`;
 }
 
-export function formatTimeOnly(timeString) {
+export function formatTimeWithoutAmPm(timeString) {
     const options = { hour: "2-digit", minute: "2-digit", hour12: false };
+    // Use a placeholder date to create a Date object
     const time = new Date(`2000-01-01T${timeString}`).toLocaleTimeString(
-        undefined,
+        "en-GB",
         options
     );
-
-    // Determine if it's "AM" or "PM" based on the hour
-    const hour = parseInt(time.split(":")[0]);
-
-    return `${time}`;
+    // Extract the hour and minute parts
+    const [hour, minute] = time.split(":");
+    // Return the formatted time without AM/PM
+    return `${hour}:${minute}`;
 }
 
 export const typeMappings = {

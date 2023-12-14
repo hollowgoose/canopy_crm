@@ -41,6 +41,7 @@ export default function IndividualAppointment() {
 
     useEffect(() => {
         fetchAppointment();
+        console.log(appointment);
     }, []);
 
     useEffect(() => {
