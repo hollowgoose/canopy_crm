@@ -36,3 +36,14 @@ export const typeMappings = {
 export function mapAppointmentType(type) {
     return typeMappings[type] || type;
 }
+
+export const appointmentTypeColors = {
+    drop_in: "blue",
+    appointment: "green",
+    meeting: "green",
+    assessment: "teal",
+    session: "red",
+    initial_session: "#00b2f5",
+    final_session: "purple",
+    supervision: "yellow",
+};
