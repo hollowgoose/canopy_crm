@@ -843,6 +843,15 @@ h2 {
     font-size: 16px;
 }
 
+.client_link {
+    text-decoration: underline;
+    transition: 0.1s;
+}
+
+.client_link:hover {
+    color: #40c551;
+}
+
 /* RBC OVERRIDES */
 /* .main-content .rbc-today {
   background-color: rgb(209, 235, 209);

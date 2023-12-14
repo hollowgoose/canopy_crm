@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "moment-timezone";
@@ -18,6 +19,8 @@ const londonTimezone = "Europe/London";
 export default function ApptCalendar() {
     // Set the default time zone for Moment.js
     moment.tz.setDefault(londonTimezone);
+
+    const navigate = useNavigate();
 
     const [appointments, setAppointments] = useState([]);
     const [formattedAppointments, setFormattedAppointments] = useState([]);
@@ -48,6 +51,9 @@ export default function ApptCalendar() {
         const formatAppointmentsForCalendar = () => {
             const formattedEvents = appointments.map((appointment) => {
                 console.log(appointment);
+
+                const id = appointment.appt_id;
+                console.log(id);
 
                 // Remove the unwanted time part
                 const dateWithoutTime = appointment.date.split("T")[0];
@@ -81,7 +87,7 @@ export default function ApptCalendar() {
                     clientName: `${clientName}`,
                     start: start,
                     end: end,
-
+                    id: id,
                     style: {
                         backgroundColor:
                             appointmentTypeColors[appointment.type] ||
@@ -129,7 +135,7 @@ export default function ApptCalendar() {
                     event: EventComponent,
                 }}
                 onSelectEvent={(event) => {
-                    alert(event.title);
+                    navigate(`/appointments/${event.id}`);
                 }}
                 eventPropGetter={eventStyleGetter}
             />
