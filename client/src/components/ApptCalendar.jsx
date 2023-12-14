@@ -8,6 +8,7 @@ import {
     typeMappings,
     formatDate,
     formatTime,
+    formatTimeOnly,
     appointmentTypeColors,
 } from "../utils/formatUtils";
 import { getClientById } from "../api/api";
@@ -76,7 +77,7 @@ export default function ApptCalendar() {
 
                 return {
                     title,
-                    time: `${timeRange}`,
+                    time: `${s_time}`,
                     clientName: `${clientName}`,
                     start: start,
                     end: end,

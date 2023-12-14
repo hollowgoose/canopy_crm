@@ -21,6 +21,19 @@ export function formatTime(timeString) {
     return `${time} ${ampm}`;
 }
 
+export function formatTimeOnly(timeString) {
+    const options = { hour: "2-digit", minute: "2-digit", hour12: false };
+    const time = new Date(`2000-01-01T${timeString}`).toLocaleTimeString(
+        undefined,
+        options
+    );
+
+    // Determine if it's "AM" or "PM" based on the hour
+    const hour = parseInt(time.split(":")[0]);
+
+    return `${time}`;
+}
+
 export const typeMappings = {
     drop_in: "Drop-In",
     appointment: "Appointment",
