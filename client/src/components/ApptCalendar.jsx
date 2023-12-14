@@ -9,6 +9,7 @@ import {
     formatDate,
     appointmentTypeColors,
 } from "../utils/formatUtils";
+import { getClientById } from "../api/api";
 
 const londonTimezone = "Europe/London";
 
@@ -62,10 +63,16 @@ export default function ApptCalendar() {
                 const title =
                     typeMappings[appointment.type] || appointment.type;
 
-                const testDate = new Date("2023-11-13");
+                const timeRange = `${appointment.start_time} - ${appointment.end_time}`;
+
+                const client = getClientById(appointment.client_id);
+
+                const clientName = client.first_name;
 
                 return {
                     title,
+                    time: `${timeRange}`,
+                    clientName: `${clientName}`,
                     start: start,
                     end: end,
 
