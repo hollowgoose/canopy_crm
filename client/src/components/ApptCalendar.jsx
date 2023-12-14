@@ -7,6 +7,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import {
     typeMappings,
     formatDate,
+    formatTime,
     appointmentTypeColors,
 } from "../utils/formatUtils";
 import { getClientById } from "../api/api";
@@ -63,9 +64,13 @@ export default function ApptCalendar() {
                 const title =
                     typeMappings[appointment.type] || appointment.type;
 
-                const timeRange = `${appointment.start_time} - ${appointment.end_time}`;
+                const s_time = formatTime(appointment.start_time);
+                const e_time = formatTime(appointment.end_time);
+
+                const timeRange = `${s_time} - ${e_time}`;
 
                 const client = getClientById(appointment.client_id);
+                console.log(client);
 
                 const clientName = client.first_name;
 
