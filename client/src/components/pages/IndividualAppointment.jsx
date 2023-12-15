@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar";
 import { getIndividualAppointment, getClientById } from "../../api/api";
-import { mapAppointmentType, formatDate } from "../../utils/formatUtils";
+import {
+    mapAppointmentType,
+    formatDate,
+    formatTime,
+} from "../../utils/formatUtils";
 
 export default function IndividualAppointment() {
     const { apptId } = useParams();
@@ -15,14 +19,12 @@ export default function IndividualAppointment() {
             try {
                 const apptData = await getIndividualAppointment(apptId);
                 if (apptData) {
-                    console.log("Fetched appointment data:", apptData);
                     setAppointment(apptData.data[0]);
                     // Now fetch the client using the clientId from the appointment
                     const clientData = await getClientById(
                         apptData.data[0].client_id
                     );
                     if (clientData) {
-                        console.log("Fetched client:", clientData);
                         setClient(clientData);
                     }
                 }
@@ -50,6 +52,7 @@ export default function IndividualAppointment() {
                             href={`/clients/${client.client_id}`}
                         >
                             {client.first_name} {client.last_name}
+                            <i class="fa-solid fa-arrow-up-right-from-square open-icon"></i>
                         </a>
                     </h1>
                     <div className="appt-buttons">
@@ -68,10 +71,42 @@ export default function IndividualAppointment() {
                     </div>
                 </div>
 
-                <p>Type: {mapAppointmentType(appointment.type)}</p>
-                <p>Date: {formatDate(appointment.date)}</p>
-                <p>Time: {appointment.time}</p>
-                {/* ... other appointment details ... */}
+                <div className="appt-detail-wrapper">
+                    <div className="notes-title-container">
+                        <h2 className="small-heading">Appointment Details</h2>
+                    </div>
+
+                    <p class="appt-text">
+                        <span class="bold">Type:</span>{" "}
+                        {mapAppointmentType(appointment.type)}
+                    </p>
+                    <p class="appt-text">
+                        <span class="bold">Date:</span>{" "}
+                        {formatDate(appointment.date)}
+                    </p>
+                    <p class="appt-text">
+                        <span class="bold">Start Time:</span>{" "}
+                        {formatTime(appointment.start_time)}
+                    </p>
+                    <p class="appt-text">
+                        <span class="bold">End Time:</span>{" "}
+                        {formatTime(appointment.end_time)}
+                    </p>
+                </div>
+
+                <div className="appt-notes-wrapper">
+                    <div className="notes-title-container">
+                        <h2 className="small-heading">Appointment Notes</h2>
+                    </div>
+
+                    <div className="scrollable-box"></div>
+
+                    <div className="box-controls">
+                        <button className="other-button-style">
+                            Create Note
+                        </button>
+                    </div>
+                </div>
             </div>
         </>
     );

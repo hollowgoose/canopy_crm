@@ -15,6 +15,11 @@
     font-weight: 600;
 }
 
+.open-icon {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -656,10 +661,21 @@ h2 {
     margin: 5px 10px;
 }
 
+.appt-notes-wrapper,
+.appt-detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    margin: 5px 10px;
+}
+
 .client-contact .small-heading,
 .client-address .small-heading,
 .appointments-wrapper .small-heading,
-.comms-wrapper .small-heading {
+.comms-wrapper .small-heading,
+.appt-notes-wrapper .small-heading,
+.appt-detail-wrapper .small-heading {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: #40c551;
@@ -844,12 +860,22 @@ h2 {
 }
 
 .client_link {
-    text-decoration: underline;
-    transition: 0.1s;
+    font-weight: 600;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
 }
 
 .client_link:hover {
     color: #40c551;
+}
+
+.appt-text {
+    font-size: 20px;
+    padding: 8px;
+}
+
+.appt-notes-wrapper {
 }
 
 /* RBC OVERRIDES */

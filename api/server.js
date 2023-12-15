@@ -263,6 +263,17 @@ app.get("/api/appointments/:clientId", async (req, res) => {
     });
 });
 
+// Add Client Appointment Note
+app.post("/api/appointments/addnote", async (req, res) => {
+    try {
+        const { appt_note_id, client_id, user_id, appt_id, content } = req.body;
+
+        const insertSql = "INSERT INTO appointments (";
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 // Client Details
 app.get("/api/clients/:clientId", async (req, res) => {
     const clientId = req.params.clientId;
